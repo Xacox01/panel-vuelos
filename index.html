@@ -140,8 +140,8 @@ async function cargarSitio(k){
   S.data[k]=out;
 }
 async function cargarRuns(k){
-  try{ const j=await jget(`https://api.github.com/repos/${SITES[k].repo}/actions/runs?per_page=10`);
-       S.runs[k]=(j.workflow_runs||[]).slice(0,10); }
+  try{ const j=await jget(`https://api.github.com/repos/${SITES[k].repo}/actions/runs?per_page=15`);
+       S.runs[k]=(j.workflow_runs||[]).filter(r=>r.conclusion!=='skipped').slice(0,10); }
   catch(e){ S.runs[k]=null; }
 }
 async function cargarTodo(){
@@ -285,7 +285,7 @@ function vWorkflows(){
       <a class="btn sm" style="margin-left:auto" href="https://github.com/${SITES[k].repo}/actions" target="_blank" rel="noopener">ver todos ↗</a></h3>
       <div class="tw"><table><tr><th>Run</th><th>Workflow</th><th>Evento</th><th>Estado</th><th>Cuándo</th></tr>
       ${runs===null?'<tr><td colspan="5" class="mut">No disponible (límite de la API anónima — reintenta en unos minutos)</td></tr>':
-        runs.map(r=>{ const c=r.conclusion||r.status; const cls=c==='success'?'c-ok':(c==='failure'?'c-bad':'c-warn');
+        runs.filter(r=>r.conclusion!=='skipped').map(r=>{ const c=r.conclusion||r.status; const cls=c==='success'?'c-ok':(c==='failure'?'c-bad':'c-warn');
           return `<tr><td><a href="${r.html_url}" target="_blank" rel="noopener">#${r.run_number}</a></td>
             <td>${esc(r.name)}<div class="faint">${String(r.head_sha).slice(0,7)}</div></td>
             <td class="mut">${esc(r.event)}</td>
