@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel de monitoreo · Radar Río</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%230f172a'/%3E%3Cpath d='M12 5a7 7 0 0 1 7 7h-2.5A4.5 4.5 0 0 0 12 7.5V5z' fill='%2310b981'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0b1220; --bg2:#0f172a; --card:#121c33; --card2:#0d1526;
+  --line:#23304d; --tx:#e6ecf7; --mut:#93a3c4; --faint:#6b7ca0;
+  --ok:#10b981; --warn:#fbbf24; --bad:#f87171; --brand:#10b981; --accent:#38bdf8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 500px at 70% -10%,#15223f 0%,var(--bg) 55%);color:var(--tx);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 20px 60px}
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#10b981,#0ea5e9);
+  display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo h1{font-size:17px} .logo small{display:block;color:var(--mut);font-weight:600;font-size:.72rem;margin-top:-2px}
+.sp{flex:1}
+.btn{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:8px 14px;
+  font-weight:700;cursor:pointer;font-size:13px}
+.btn:hover{border-color:var(--brand)} .btn.pri{background:var(--brand);border-color:var(--brand);color:#04121c}
+.btn.sm{padding:5px 10px;font-size:12px;border-radius:8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+.tab{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 14px;color:var(--mut);
+  cursor:pointer;font-weight:700;font-size:13px}
+.tab.act{background:var(--card);color:var(--tx);border-color:var(--brand)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h3{font-size:13.5px;color:var(--mut);font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid rgba(255,255,255,.05);font-size:13.5px}
+.kv:first-of-type{border-top:0}
+.kv b{text-align:right;font-weight:700}
+.kpi{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.kpi .box{flex:1;min-width:130px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .box .n{font-size:22px;font-weight:800}
+.kpi .box .l{color:var(--mut);font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid var(--line);
+  border-radius:999px;padding:2px 10px;font-size:11.5px;font-weight:800}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.c-ok{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.5);color:#6ee7b7}
+.c-warn{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.5);color:#fcd34d}
+.c-bad{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.5);color:#fca5a5}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--mut);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  padding:7px 8px;border-bottom:1px solid var(--line)}
+td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,.025)}
+.tw{overflow-x:auto}
+.estado{font-weight:800;font-size:11.5px;padding:2px 9px;border-radius:99px;background:rgba(255,255,255,.07)}
+.e-OK{color:#6ee7b7} .e-ALERTA{color:#fcd34d} .e-FALLA{color:#fca5a5} .e-DESC{color:var(--mut)}
+.mut{color:var(--mut)} .faint{color:var(--faint);font-size:12px}
+input{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;
+  padding:10px 12px;font-size:14px;width:100%}
+input:focus{outline:none;border-color:var(--brand)}
+label{display:block;color:var(--mut);font-size:12px;font-weight:700;margin:10px 0 5px;letter-spacing:.03em}
+.login{max-width:400px;margin:9vh auto 0}
+.login .card{padding:26px}
+.login h2{font-size:18px;margin-bottom:4px}
+.login .sub{color:var(--mut);font-size:13px;margin-bottom:8px}
+.err{color:#fca5a5;font-size:13px;font-weight:700;min-height:18px;margin-top:10px}
+.steps{display:flex;gap:6px;margin:12px 0 4px}
+.steps i{height:4px;flex:1;border-radius:99px;background:var(--line)}
+.steps i.on{background:var(--brand)}
+.note{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.3);border-radius:12px;
+  padding:12px 14px;font-size:12.5px;color:#bfe3f7;margin-top:14px}
+.foot{color:var(--faint);font-size:11.5px;margin-top:22px;text-align:center}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:var(--card2);
+  border:1px solid var(--line);border-radius:8px;padding:8px 10px;word-break:break-all;color:#c9d6ee}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--brand);
+  border-radius:50%;animation:sp 1s linear infinite;vertical-align:-3px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="config.js"></script>
+<script>
+/* ============================================================
+   Panel de monitoreo · Radar Río (qwen_vuelos_rio + vuelos-rio-live)
+   - Login: usuario/contraseña (SHA-256 con salt) + MFA TOTP (RFC 6238)
+   - Datos públicos: data.json / auditoria.json / modulos.json por sitio
+     (raw.githubusercontent.com) + runs de Actions (api.github.com anónima)
+   - Modelo de seguridad: los datos mostrados son públicos por diseño
+     (GitHub Pages); el login protege el acceso al panel.
+   ============================================================ */
+'use strict';
+const $ = (sel) => document.querySelector(sel);   // acepta '#id' como en los handlers
+const APP = document.getElementById('app');
+const SITES = {
+  qwen: { key:'qwen', repo:'Xacox01/qwen_vuelos_rio', url:'https://xacox01.github.io/qwen_vuelos_rio/', label:'Qwen Vuelos Río' },
+  rio:  { key:'rio',  repo:'Xacox01/vuelos-rio-live',  url:'https://xacox01.github.io/vuelos-rio-live/',  label:'Vuelos Río (live)' },
+};
+const REFRESH_MIN = 5, SESSION_MS = 12*3600*1000, MAX_FAILS = 5, LOCK_MS = 5*60*1000;
+const S = { tab:'resumen', paso:1, fails:0, lock_until:0, nextload:0, loading:false,
+            data:{}, runs:{}, msgLogin:'' };
+
+/* ---------- utilidades ---------- */
+async function sha(txt){ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+function b32dec(s){ const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; let bits=0,val=0,out=[];
+  for(const c of s.replace(/=+$/,'').toUpperCase()){ const i=A.indexOf(c); if(i<0) continue;
+    val=(val<<5)|i; bits+=5; if(bits>=8){ out.push((val>>>(bits-8))&255); bits-=8; } }
+  return new Uint8Array(out); }
+async function totp(secret, offset=0){
+  const counter=Math.floor(Date.now()/1000/30)+offset;
+  const buf=new ArrayBuffer(8), dv=new DataView(buf);
+  dv.setUint32(0,Math.floor(counter/2**32)); dv.setUint32(4,counter>>>0);
+  const k=await crypto.subtle.importKey('raw',b32dec(secret),{name:'HMAC',hash:'SHA-1'},false,['sign']);
+  const sig=new Uint8Array(await crypto.subtle.sign('HMAC',k,buf));
+  const off=sig[sig.length-1]&0x0f;
+  return String(((sig[off]&0x7f)<<24|sig[off+1]<<16|sig[off+2]<<8|sig[off+3])%1e6).padStart(6,'0');
+}
+function stgo(s){ if(!s) return '—';
+  const d=new Date(String(s).replace(' ','T')+'Z'); if(isNaN(d)) return String(s);
+  return d.toLocaleString('es-CL',{timeZone:'America/Santiago',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+function hace(s){ if(!s) return '—';
+  const d=new Date(String(s).replace(' ','T')+'Z'); if(isNaN(d)) return '?';
+  const m=Math.max(0,Math.round((Date.now()-d.getTime())/60000));
+  if(m<1) return 'ahora'; if(m<60) return m+' min'; const h=Math.floor(m/60);
+  if(h<24) return h+' h '+(m%60)+'m'; return Math.floor(h/24)+' d '+(h%24)+'h'; }
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>(n==null?'—':Number(n).toLocaleString('es-CL'));
+
+/* ---------- datos ---------- */
+async function jget(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }
+async function cargarSitio(k){
+  const s=SITES[k], t=Date.now(), base=`https://raw.githubusercontent.com/${s.repo}/main/`;
+  const out={};
+  for(const [name,key] of [['data.json','data'],['auditoria.json','aud'],['modulos.json','mods']]){
+    try{ out[key]=await jget(`${base}${name}?t=${t}`); }catch(e){ out[key]=null; }
+  }
+  S.data[k]=out;
+}
+async function cargarRuns(k){
+  try{ const j=await jget(`https://api.github.com/repos/${SITES[k].repo}/actions/runs?per_page=10`);
+       S.runs[k]=(j.workflow_runs||[]).slice(0,10); }
+  catch(e){ S.runs[k]=null; }
+}
+async function cargarTodo(){
+  if(S.loading) return; S.loading=true; render();
+  await Promise.all([ ...Object.keys(SITES).map(cargarSitio), ...Object.keys(SITES).map(cargarRuns) ]);
+  S.loading=false; S.nextload=Date.now()+REFRESH_MIN*60*1000; render();
+}
+
+/* ---------- sesión ---------- */
+function sesionValida(){ try{ const s=JSON.parse(sessionStorage.getItem('panel_auth')||'null');
+    return s && Date.now()-s.ts<SESSION_MS ? s : null; }catch(e){ return null; } }
+function lockRestante(){ return Math.max(0,S.lock_until-Date.now()); }
+
+/* ---------- vistas ---------- */
+function vLogin(paso,msg){
+  const locked=lockRestante()>0;
+  return `<div class="login"><div class="card">
+    <div class="logo" style="margin-bottom:14px"><div class="ic">📡</div>
+      <h2>Panel de monitoreo</h2></div>
+    <div class="sub">Radar Río · qwen_vuelos_rio + vuelos-rio-live</div>
+    <div class="steps"><i class="${paso>=1?'on':''}"></i><i class="${paso>=2?'on':''}"></i></div>
+    <div class="faint" style="margin-bottom:6px">${paso===1?'Paso 1 de 2 · credenciales':'Paso 2 de 2 · código MFA'}</div>
+    ${paso===1?`
+      <label>Usuario</label><input id="u" autocomplete="username" autofocus>
+      <label>Contraseña</label><input id="p" type="password" autocomplete="current-password">
+      <button class="btn pri" style="width:100%;margin-top:14px" id="b1" ${locked?'disabled':''}>Continuar</button>
+      ${locked?`<p class="err">Demasiados intentos — espera ${Math.ceil(lockRestante()/1000)} s.</p>`:''}
+    `:`
+      <label>Código MFA (6 dígitos, app autenticadora)</label>
+      <input id="c" inputmode="numeric" maxlength="6" placeholder="000000" style="letter-spacing:.5em;text-align:center;font-size:20px" autofocus>
+      <button class="btn pri" style="width:100%;margin-top:14px" id="b2">Entrar</button>
+      <button class="btn sm" style="margin-top:10px" id="back">← volver</button>
+    `}
+    <div class="err">${esc(msg||'')}</div>
+    <div class="note">Acceso protegido con usuario/contraseña y <b>MFA por código TOTP</b> (Google Authenticator, Authy, etc.).
+    La información mostrada es la misma publicada en los repos públicos; el login protege el acceso al panel.</div>
+  </div></div>`;
+}
+function kpiSite(k){
+  const D=S.data[k]||{}, s=SITES[k], d=D.data, a=D.aud, ec=(d&&d.email_cfg)||{}, sus=(d&&d.suscriptores)||{};
+  const fallos=a?a.fallos:null, alertas=a?a.alertas:null;
+  const emailOk=ec.bus!==false&&ec.rsa!==false&&ec.smtp===true;
+  const emailTxt=!d?'sin dato':(emailOk?'activos':(ec.smtp===false?'pausa: falta SMTP en este repo':(ec.rsa===false?'bloqueados: falta RSA':'revisar bus')));
+  const col=d?((fallos>0)?'var(--bad)':(alertas>0?'var(--warn)':'var(--ok)')):'var(--bad)';
+  return `<div class="card">
+    <h3><span class="dot" style="background:${col}"></span>
+      ${s.label} <a class="btn sm" style="margin-left:auto" href="${s.url}" target="_blank" rel="noopener">abrir sitio ↗</a></h3>
+    <div class="kpi">
+      <div class="box"><div class="n">${d?hace(d.updated):'—'}</div><div class="l">publicado</div></div>
+      <div class="box"><div class="n" style="color:${d&&d.email_pending?'var(--warn)':'inherit'}">${d?fmt((d.alerts||[]).length):'—'}</div><div class="l">alertas registradas</div></div>
+      <div class="box"><div class="n">${d&&d.cupones?fmt((d.cupones.items||[]).length):'—'}</div><div class="l">cupones</div></div>
+      <div class="box"><div class="n">${sus.total!=null?fmt(sus.total):'—'}</div><div class="l">suscriptores</div></div>
+    </div>
+    <div class="kv"><span>Auditoría M01–M17</span><b>${a?`<span class="estado e-${fallos>0?'FALLA':(alertas>0?'ALERTA':'OK')}">${fallos>0?'FALLA':(alertas>0?'ALERTA':'OK')}</span>`:'—'} <span class="faint">${a?hace(a.ts):''}</span></b></div>
+    <div class="kv"><span>Correos</span><b>${!d?'—':`<span class="chip ${emailOk?'c-ok':'c-warn'}">${esc(emailTxt)}</span>`}</b></div>
+    <div class="kv"><span>Ciclo / cadencia</span><b>#${d?fmt(d.cycle):'—'} · */5 min</b></div>
+    <div class="kv"><span>Escaneo OTA</span><b>${d?hace(d.ota_ts):'—'}</b></div>
+    <div class="kv"><span>Resumen de la mañana</span><b>${d&&d.resumen_enviado?esc(d.resumen_enviado):'—'}</b></div>
+  </div>`;
+}
+function consistenciaCard(){
+  const rows=Object.keys(SITES).map(k=>{
+    const d=(S.data[k]||{}).data;
+    return `<div class="kv"><span>${SITES[k].label}</span><b>publicado hace ${esc(d?hace(d.updated):'—')} · ciclo #${d?fmt(d.cycle):'—'}</b></div>`;
+  }).join('');
+  return `<div class="card"><h3>🔀 Consistencia entre secciones (Task 26)</h3>
+    ${rows}
+    <p class="faint" style="margin-top:10px">Ambos sitios publican con la MISMA cadencia (cron */5) y el scraper sincroniza la
+    tarjeta GIG de «Destinos» con el ciclo fresco de «Precios hoy»/«Combos» (sync GIG + chips de frescura, 29-oct).
+    Si ves otra vez un valor distinto entre «los más baratos» y «destinos», mira la pestaña <b>Módulos</b>: la auditoría
+    marca la frescura de cada fuente.</p>
+  </div>`;
+}
+function busCard(){
+  const rows=Object.keys(SITES).map(k=>{
+    const d=(S.data[k]||{}).data, ec=(d&&d.email_cfg)||{};
+    const c=v=>v===true?'c-ok':(v===false?'c-bad':'c-warn');
+    const t=v=>v===true?'OK':(v===false?'FALTA':'sin dato');
+    return `<div class="kv"><span>${SITES[k].label}</span><b>
+      <span class="chip ${c(ec.bus)}">bus ${esc(t(ec.bus))}</span>
+      <span class="chip ${c(ec.rsa)}">rsa ${esc(t(ec.rsa))}</span>
+      <span class="chip ${c(ec.smtp)}">smtp ${esc(t(ec.smtp))}</span>
+      ${ec.bus_uuid?`<span class="faint">…${esc(ec.bus_uuid)}</span>`:''}</b></div>`;
+  }).join('');
+  return `<div class="card"><h3>✉️ Correos — configuración por sitio</h3>
+    ${rows}
+    <p class="faint" style="margin-top:10px">Bus de suscripciones <b>auto-rotante</b> (uno por repo): si el endpoint gratuito
+    expira (7 días), bus_alertas.py crea el siguiente en el próximo ciclo. Los secretos son POR REPO:
+    si un sitio dice <b>falta</b>, copia ese secret en Settings → Secrets and variables → Actions de ese repositorio
+    (mismos valores que ya usa el otro sitio).</p>
+  </div>`;
+}
+function vResumen(){
+  const any=Object.values(S.data).some(x=>x&&x.data);
+  if(!any) return `<div class="card">Cargando datos… <span class="spin"></span></div>`;
+  return `<div class="grid">${kpiSite('qwen')}${kpiSite('rio')}</div>
+     <div class="grid" style="margin-top:14px">${consistenciaCard()}${busCard()}</div>`;
+}
+function vModulos(){
+  let body='';
+  for(const k of Object.keys(SITES)){
+    const D=S.data[k]||{}, mods=(D.mods&&D.mods.modulos)||[], aud=(D.aud&&D.aud.modulos)||[];
+    const byId={}; aud.forEach(m=>byId[m.id]=m);
+    body+=`<div class="card" style="margin-top:14px"><h3>${SITES[k].label}
+      <span class="faint" style="margin-left:auto;text-transform:none;letter-spacing:0">auditoría: ${esc(stgo((D.aud||{}).ts))} · fallos ${(D.aud||{}).fallos??'—'} · alertas ${(D.aud||{}).alertas??'—'}</span></h3>
+      <div class="tw"><table><tr><th>Mód</th><th>Nombre</th><th>Estado</th><th>Frescura</th><th>Detalle</th></tr>
+      ${mods.map(m=>{ const a=byId[m.id]||{}; const e=a.estado||'—';
+        return `<tr><td><b>${esc(m.numero)}</b></td><td>${esc(m.nombre)}<div class="faint">${esc(m.id)}</div></td>
+          <td>${e==='—'?'<span class="e-DESC">—</span>':`<span class="estado e-${esc(e)}">${esc(e)}</span>`}</td>
+          <td>${a.frescura_h!=null?Number(a.frescura_h).toFixed(1)+' h':'—'}</td>
+          <td class="mut">${esc(a.detalle||'')}</td></tr>`; }).join('')}
+      </table></div></div>`;
+  }
+  if(!body) body='<div class="card">Cargando módulos… <span class="spin"></span></div>';
+  return body;
+}
+function vCorreos(){
+  const rows=Object.keys(SITES).map(k=>{
+    const d=(S.data[k]||{}).data, ec=(d&&d.email_cfg)||{}, sus=(d&&d.suscriptores)||{};
+    const t=v=>v===true?'OK':(v===false?'FALTA':'sin dato');
+    return `<div class="card"><h3>✉️ ${SITES[k].label}</h3>
+      <div class="kv"><span>Suscriptores (cifrados)</span><b>${sus.total!=null?fmt(sus.total)+' · '+(sus.muestras||[]).map(esc).join(', '):'—'}</b></div>
+      <div class="kv"><span>Registro actualizado</span><b>${sus.ts?esc(stgo(sus.ts))+' ('+esc(hace(sus.ts))+')':'—'}</b></div>
+      <div class="kv"><span>Bus (uuid)</span><b>${ec.bus_uuid?'…'+esc(ec.bus_uuid):'—'} ${ec.bus_rotado?'<div class="faint">rotado: '+esc(stgo(ec.bus_rotado))+'</div>':''}</b></div>
+      <div class="kv"><span>Clave RSA (descifrado)</span><b>${esc(t(ec.rsa))}</b></div>
+      <div class="kv"><span>SMTP</span><b>${esc(t(ec.smtp))}</b></div>
+      <div class="kv"><span>Cola de envío</span><b>${d?(d.email_pending?'hay alertas pendientes':'sin pendientes'):'—'}</b></div>
+      <div class="kv"><span>Último envío (watermark)</span><b>${d&&d.alerts_sent_ts?esc(stgo(d.alerts_sent_ts)):'—'}</b></div>
+      <div class="kv"><span>Resumen de la mañana</span><b>${d&&d.resumen_enviado?esc(d.resumen_enviado):'—'}</b></div>
+      <div class="kv"><span>email_cfg actualizado</span><b>${ec.ts?esc(stgo(ec.ts))+' ('+esc(hace(ec.ts))+')':'— (aparece tras el próximo ciclo)'}</b></div>
+    </div>`;
+  }).join('');
+  return `<div class="grid">${rows}</div>
+  <div class="note">¿Un sitio en pausa? Los secretos SMTP_HOST / SMTP_USER / SMTP_PASS / ALERT_RSA_PRIV son <b>por repositorio</b>.
+  Cópialos en Settings → Secrets and variables → Actions del repo que falte y el próximo ciclo (≤5 min) sale solo.</div>`;
+}
+function vWorkflows(){
+  const rows=Object.keys(SITES).map(k=>{
+    const runs=S.runs[k];
+    return `<div class="card"><h3>⚙️ Actions · ${SITES[k].label}
+      <a class="btn sm" style="margin-left:auto" href="https://github.com/${SITES[k].repo}/actions" target="_blank" rel="noopener">ver todos ↗</a></h3>
+      <div class="tw"><table><tr><th>Run</th><th>Workflow</th><th>Evento</th><th>Estado</th><th>Cuándo</th></tr>
+      ${runs===null?'<tr><td colspan="5" class="mut">No disponible (límite de la API anónima — reintenta en unos minutos)</td></tr>':
+        runs.map(r=>{ const c=r.conclusion||r.status; const cls=c==='success'?'c-ok':(c==='failure'?'c-bad':'c-warn');
+          return `<tr><td><a href="${r.html_url}" target="_blank" rel="noopener">#${r.run_number}</a></td>
+            <td>${esc(r.name)}<div class="faint">${String(r.head_sha).slice(0,7)}</div></td>
+            <td class="mut">${esc(r.event)}</td>
+            <td><span class="chip ${cls}">${esc(c)}</span></td>
+            <td class="mut">${stgo(String(r.created_at).replace('T',' ').slice(0,19))}</td></tr>`; }).join('')}
+      </table></div>
+      <p class="faint" style="margin-top:8px">Cadencia: refresh */5 min (unificada) · auditoría 4×/día · auto-reparación on-failure.</p>
+    </div>`;
+  }).join('');
+  return `<div class="grid">${rows}</div>`;
+}
+function vDatos(){
+  const rows=Object.keys(SITES).map(k=>{
+    const d=(S.data[k]||{}).data, c=(d&&d.cupones)||{};
+    const stats=c.stats||{};
+    return `<div class="card"><h3>📊 Datos y cupones · ${SITES[k].label}</h3>
+      <div class="kv"><span>data.json publicado</span><b>${d?esc(stgo(d.updated))+' ('+esc(hace(d.updated))+')':'—'}</b></div>
+      <div class="kv"><span>Ciclo</span><b>#${d?fmt(d.cycle):'—'}</b></div>
+      <div class="kv"><span>Escaneo OTA (11 fuentes)</span><b>${d?esc(hace(d.ota_ts)):'—'}</b></div>
+      <div class="kv"><span>Cupones</span><b>${fmt((c.items||[]).length)} <span class="faint">· ts ${esc(hace(c.ts))}</span></b></div>
+      <div class="kv"><span>Series de mínimos (alertas)</span><b>${d?fmt(Object.keys(d.minimos||{}).length):'—'}</b></div>
+      <div class="kv"><span>Alertas registradas</span><b>${d?fmt((d.alerts||[]).length):'—'}</b></div>
+    </div>`;
+  }).join('');
+  return `<div class="grid">${rows}</div>`;
+}
+function vConfig(){
+  const secret=(PANEL_CFG.totp_secret||'');
+  const uri=`otpauth://totp/${encodeURIComponent('Panel Vuelos')}:${encodeURIComponent(PANEL_CFG.usuario||'admin')}?secret=${secret}&issuer=${encodeURIComponent('Panel Vuelos')}&algorithm=SHA1&digits=6&period=30`;
+  return `<div class="grid"><div class="card"><h3>🔐 MFA (app autenticadora)</h3>
+      <p class="mut" style="font-size:13px">Si cambias de teléfono, agrega esta clave en tu app (Google Authenticator → «+» → Introducir una clave proporcionada):</p>
+      <div class="code" style="margin-top:10px">${esc(uri)}</div>
+      <p class="faint" style="margin-top:10px">Secreto base32: <span class="code">${esc(secret.slice(0,4))}••••••••${esc(secret.slice(-4))}</span> (completo en config.js del repo del panel).</p>
+    </div>
+    <div class="card"><h3>ℹ️ Modelo de seguridad</h3>
+      <div class="kv"><span>Sesión</span><b>12 h (se cierra al cerrar la pestaña)</b></div>
+      <div class="kv"><span>Login</span><b>usuario/contraseña (SHA-256 con salt) + TOTP 6 dígitos/30 s</b></div>
+      <div class="kv"><span>Bloqueo</span><b>${MAX_FAILS} intentos fallidos → ${LOCK_MS/60000} min</b></div>
+      <div class="kv"><span>Datos</span><b>públicos de los repos (Pages); el login protege el panel, no los datos</b></div>
+      <div class="kv"><span>Secretos</span><b>el panel NUNCA contiene secretos SMTP/RSA (solo booleanos publicados)</b></div>
+    </div></div>`;
+}
+function vApp(){
+  const tabs=[['resumen','📋 Resumen'],['modulos','🧩 Módulos M01–M17'],['correos','✉️ Correos'],['workflows','⚙️ Workflows'],['datos','📊 Datos y cupones'],['config','🔐 Configuración']];
+  const left=Math.max(0,Math.round((S.nextload-Date.now())/1000));
+  let inner='';
+  if(S.tab==='resumen') inner=vResumen();
+  else if(S.tab==='modulos') inner=vModulos();
+  else if(S.tab==='correos') inner=vCorreos();
+  else if(S.tab==='workflows') inner=vWorkflows();
+  else if(S.tab==='datos') inner=vDatos();
+  else inner=vConfig();
+  return `<header>
+      <div class="logo"><div class="ic">📡</div><div><h1>Panel de monitoreo</h1><small>Radar Río · ambos sitios</small></div></div>
+      <div class="sp"></div>
+      <span class="faint" id="cd">${S.loading?'actualizando… <span class="spin"></span>':`próxima actualización en ${left}s`}</span>
+      <button class="btn sm" id="refresh">↻ ahora</button>
+      <button class="btn sm" id="logout">salir</button>
+    </header>
+    <div class="tabs">${tabs.map(([id,l])=>`<div class="tab ${S.tab===id?'act':''}" data-tab="${id}">${l}</div>`).join('')}</div>
+    ${inner}
+    <div class="foot">Panel interno · datos leídos en vivo de los repos públicos · hora local Santiago · generación ${esc(PANEL_CFG.generado||'')}</div>`;
+}
+function render(){
+  const s=sesionValida();
+  if(!s){ APP.innerHTML=vLogin(S.paso,S.msgLogin); wireLogin(); return; }
+  APP.innerHTML=vApp(); wireApp();
+}
+
+/* ---------- eventos ---------- */
+function wireLogin(){
+  const b1=$('#b1'), b2=$('#b2'), back=$('#back');
+  if(b1) b1.onclick=async()=>{
+    if(lockRestante()>0) return;
+    const u=($('#u').value||'').trim(), p=$('#p').value||'';
+    S.msgLogin='';
+    const uh=await sha(PANEL_CFG.salt+u), ph=await sha(PANEL_CFG.salt+p);
+    if(uh===PANEL_CFG.user_hash && ph===PANEL_CFG.pass_hash){ S.paso=2; S.tmpUser=u; }
+    else{ S.fails++;
+      if(S.fails>=MAX_FAILS){ S.lock_until=Date.now()+LOCK_MS; S.fails=0; S.msgLogin='Bloqueado 5 minutos por intentos fallidos.'; }
+      else S.msgLogin='Credenciales incorrectas ('+(MAX_FAILS-S.fails)+' intentos restantes).'; }
+    render();
+  };
+  if(b2) b2.onclick=async()=>{
+    const c=($('#c').value||'').replace(/\D/g,'');
+    if(c.length!==6){ S.msgLogin='Ingresa los 6 dígitos del código.'; render(); return; }
+    const okNow=await totp(PANEL_CFG.totp_secret,0), okPrev=await totp(PANEL_CFG.totp_secret,-1);
+    if(c===okNow||c===okPrev){
+      sessionStorage.setItem('panel_auth',JSON.stringify({ts:Date.now(),user:S.tmpUser||'admin'}));
+      S.paso=1; S.msgLogin=''; S.fails=0; cargarTodo();
+    } else { S.fails++;
+      if(S.fails>=MAX_FAILS){ S.lock_until=Date.now()+LOCK_MS; S.fails=0; S.paso=1; S.msgLogin='Bloqueado 5 minutos por intentos fallidos.'; }
+      else S.msgLogin='Código MFA incorrecto ('+(MAX_FAILS-S.fails)+' intentos restantes).'; }
+    render();
+  };
+  if(back) back.onclick=()=>{ S.paso=1; render(); };
+  ['#u','#p','#c'].forEach(sel=>{ const el=$(sel); if(el) el.onkeydown=e=>{ if(e.key==='Enter'){ (S.paso===2?b2:b1).click(); } }; });
+}
+function wireApp(){
+  document.querySelectorAll('[data-tab]').forEach(el=>el.onclick=()=>{ S.tab=el.dataset.tab; render(); });
+  $('#refresh').onclick=()=>cargarTodo();
+  $('#logout').onclick=()=>{ sessionStorage.removeItem('panel_auth'); S.paso=1; S.msgLogin=''; render(); };
+}
+
+/* ---------- arranque ---------- */
+render();
+if(sesionValida()) cargarTodo();
+setInterval(()=>{ if(!sesionValida()) return;
+  if(Date.now()>=S.nextload && !S.loading) cargarTodo();
+  else { const el=document.getElementById('cd');
+    if(el && !S.loading && S.nextload) el.textContent=`próxima actualización en ${Math.max(0,Math.round((S.nextload-Date.now())/1000))}s`; }
+},1000);
+</script>
+</body>
+</html>
