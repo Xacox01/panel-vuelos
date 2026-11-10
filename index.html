@@ -164,6 +164,11 @@ async function cargarRunsAll(){
   }catch(e){}
   await Promise.all(Object.keys(SITES).map(cargarRuns));
 }
+function notaRuns(){
+  if(S.runs_ts){ const t=String(S.runs_ts).replace(' ','T')+'Z';
+    return 'Runs leídos del proxy del panel (última publicación '+esc(stgo(t))+' · hace '+esc(hace(t))+' · se publica cada 10 min).'; }
+  return 'Runs vía API pública de GitHub (puede agotar el límite anónimo; el proxy del panel los publica cada 10 min).';
+}
 async function cargarTodo(){
   if(S.loading) return; S.loading=true; render();
   await Promise.all([ ...Object.keys(SITES).map(cargarSitio), cargarRunsAll() ]);
@@ -347,7 +352,7 @@ function vWorkflows(){
             <td class="mut">${stgo(String(r.created_at).replace('T',' ').slice(0,19))}</td></tr>`; }).join('')}
       </table></div>
       <p class="faint" style="margin-top:8px">Cadencia: refresh */5 min (unificada) · auditoría 4×/día · auto-reparación on-failure.
-      ${S.runs_ts?`Runs leídos del proxy del panel (última publicación ${esc(stgo(String(S.runs_ts).replace(' ','T')+'Z'))} · hace ${esc(hace(String(S.runs_ts).replace(' ','T')+'Z'))} · se publica cada 10 min).`:'Runs vía API pública de GitHub (puede agotar el límite anónimo; el proxy del panel los publica cada 10 min).')}</p>
+      ${notaRuns()}</p>
     </div>`;
   }).join('');
   return `<div class="grid">${rows}</div>`;
