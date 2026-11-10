@@ -134,7 +134,8 @@ async function jget(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok)
 async function cargarSitio(k){
   const s=SITES[k], t=Date.now(), base=`https://raw.githubusercontent.com/${s.repo}/main/`;
   const out={};
-  for(const [name,key] of [['data.json','data'],['auditoria.json','aud'],['modulos.json','mods']]){
+  for(const [name,key] of [['data.json','data'],['auditoria.json','aud'],['modulos.json','mods'],
+                           ['reparacion.json','rep'],['estado_reparacion.json','estrep'],['alertas.cfg.json','acfg']]){
     try{ out[key]=await jget(`${base}${name}?t=${t}`); }catch(e){ out[key]=null; }
   }
   S.data[k]=out;
@@ -192,7 +193,9 @@ function kpiSite(k){
     <div class="kpi">
       <div class="box"><div class="n">${d?hace(d.updated):'—'}</div><div class="l">publicado</div></div>
       <div class="box"><div class="n" style="color:${d&&d.email_pending?'var(--warn)':'inherit'}">${d?fmt((d.alerts||[]).length):'—'}</div><div class="l">alertas registradas</div></div>
-      <div class="box"><div class="n">${d&&d.cupones?fmt((d.cupones.items||[]).length):'—'}</div><div class="l">cupones</div></div>
+      <div class="box"><div class="n">${d&&d.cupones?(()=>{ const it=(d.cupones.items||[]);
+        const vis=it.filter(x=>x.kind!=='oferta'&&!x.expired).length;
+        return `${fmt(vis)} <span class="faint" style="font-size:12px">de ${fmt(it.length)}</span>`; })():'—'}</div><div class="l">cupones visibles</div></div>
       <div class="box"><div class="n">${sus.total!=null?fmt(sus.total):'—'}</div><div class="l">suscriptores</div></div>
     </div>
     <div class="kv"><span>Auditoría M01–M17</span><b>${a?`<span class="estado e-${fallos>0?'FALLA':(alertas>0?'ALERTA':'OK')}">${fallos>0?'FALLA':(alertas>0?'ALERTA':'OK')}</span>`:'—'} <span class="faint">${a?hace(a.ts):''}</span></b></div>
@@ -217,19 +220,25 @@ function consistenciaCard(){
 }
 function busCard(){
   const rows=Object.keys(SITES).map(k=>{
-    const d=(S.data[k]||{}).data, ec=(d&&d.email_cfg)||{};
+    const d=(S.data[k]||{}).data, ec=(d&&d.email_cfg)||{}, ac=(S.data[k]||{}).acfg||{};
     const c=v=>v===true?'c-ok':(v===false?'c-bad':'c-warn');
     const t=v=>v===true?'OK':(v===false?'FALTA':'sin dato');
+    let expiraTxt='';
+    if(ac.bus_expira){ const de=new Date(String(ac.bus_expira).replace(' ','T')+'Z').getTime();
+      if(!isNaN(de)){ const dias=(de-Date.now())/864e5;
+        expiraTxt=`<span class="chip ${dias<2?'c-bad':(dias<4?'c-warn':'c-ok')}">expira en ${dias<1?'<1':Math.floor(dias)} d</span>`; } }
     return `<div class="kv"><span>${SITES[k].label}</span><b>
       <span class="chip ${c(ec.bus)}">bus ${esc(t(ec.bus))}</span>
       <span class="chip ${c(ec.rsa)}">rsa ${esc(t(ec.rsa))}</span>
       <span class="chip ${c(ec.smtp)}">smtp ${esc(t(ec.smtp))}</span>
+      ${expiraTxt}
       ${ec.bus_uuid?`<span class="faint">…${esc(ec.bus_uuid)}</span>`:''}</b></div>`;
   }).join('');
   return `<div class="card"><h3>✉️ Correos — configuración por sitio</h3>
     ${rows}
     <p class="faint" style="margin-top:10px">Bus de suscripciones <b>auto-rotante</b> (uno por repo): si el endpoint gratuito
-    expira (7 días), bus_alertas.py crea el siguiente en el próximo ciclo. Los secretos son POR REPO:
+    expira (7 días), bus_alertas.py crea el siguiente en el próximo ciclo y el front re-lee la cfg en cada clic
+    (fix 10-nov). Los secretos son POR REPO:
     si un sitio dice <b>falta</b>, copia ese secret en Settings → Secrets and variables → Actions de ese repositorio
     (mismos valores que ya usa el otro sitio).</p>
   </div>`;
@@ -278,6 +287,32 @@ function vCorreos(){
   <div class="note">¿Un sitio en pausa? Los secretos SMTP_HOST / SMTP_USER / SMTP_PASS / ALERT_RSA_PRIV son <b>por repositorio</b>.
   Cópialos en Settings → Secrets and variables → Actions del repo que falte y el próximo ciclo (≤5 min) sale solo.</div>`;
 }
+function vReparaciones(){
+  const cards=Object.keys(SITES).map(k=>{
+    const D=S.data[k]||{}, r=D.rep, est=D.estrep;
+    if(!r) return `<div class="card"><h3>🔧 ${SITES[k].label}</h3><p class="mut">Sin registro de reparación (reparacion.json no existe aún: no ha hecho falta reparar).</p></div>`;
+    const acc=(r.modulos||[]).map(m=>{
+      const e=m.despues||'—'; const cls=e==='OK'||e==='VERIFICADO'?'e-OK':(e==='NEUTRO'?'e-DESC':'e-FALLA');
+      return `<tr><td><b>${esc(m.numero||'')}</b> ${esc(m.nombre||'')}</td>
+        <td><span class="estado ${cls}">${esc(e)}</span></td>
+        <td class="mut">${esc((m.detalle||'').slice(0,140))}</td></tr>`;
+    }).join('');
+    const obs=(est&&est.fallos_consec>0)?`<span class="chip c-warn">modo observación: ${esc(String(est.fallos_consec))} fallos consecutivos</span>`:'<span class="chip c-ok">sin tormenta</span>';
+    return `<div class="card"><h3>🔧 ${SITES[k].label}
+      <span class="faint" style="margin-left:auto;text-transform:none;letter-spacing:0">última reparación: ${esc(stgo(r.ts))} (${esc(hace(r.ts))})</span></h3>
+      <div class="kv"><span>Disparo</span><b>${esc(r.trigger||'—')}</b></div>
+      <div class="kv"><span>Re-captura</span><b>${r.recaptura?'SÍ':'no (anti-bucle / modo observación)'}</b></div>
+      <div class="kv"><span>Resultado</span><b>${esc(r.resumen||'—')}</b></div>
+      <div class="kv"><span>Anti-tormenta</span><b>${obs}</b></div>
+      ${(r.motivos&&r.motivos.length)?`<div class="kv"><span>Motivos</span><b class="mut" style="max-width:420px">${esc(r.motivos.join(' · '))}</b></div>`:''}
+      <div class="tw" style="margin-top:8px"><table><tr><th>Módulo</th><th>Después</th><th>Detalle</th></tr>${acc}</table></div>
+    </div>`;
+  }).join('');
+  return `<div class="grid">${cards}</div>
+  <div class="note">Cada fallo de <b>refresh</b> dispara <b>auto-reparación</b> (barrido M01–M17 → re-captura → gate).
+  Si la reparación falla 3 veces seguidas pasa a <b>modo observación</b> (deja de re-capturar hasta que la causa raíz
+  desaparezca) — así fue como la noche del 9-nov se contuvo la tormenta de cupones.</div>`;
+}
 function vWorkflows(){
   const rows=Object.keys(SITES).map(k=>{
     const runs=S.runs[k];
@@ -305,7 +340,10 @@ function vDatos(){
       <div class="kv"><span>data.json publicado</span><b>${d?esc(stgo(d.updated))+' ('+esc(hace(d.updated))+')':'—'}</b></div>
       <div class="kv"><span>Ciclo</span><b>#${d?fmt(d.cycle):'—'}</b></div>
       <div class="kv"><span>Escaneo OTA (11 fuentes)</span><b>${d?esc(hace(d.ota_ts)):'—'}</b></div>
-      <div class="kv"><span>Cupones</span><b>${fmt((c.items||[]).length)} <span class="faint">· ts ${esc(hace(c.ts))}</span></b></div>
+      <div class="kv"><span>Cupones (visibles de total)</span><b>${(()=>{ const it=(c.items||[]);
+        const vis=it.filter(x=>x.kind!=='oferta'&&!x.expired).length;
+        const salv=(c.stats||{}).salvados_prev||0;
+        return `${fmt(vis)} de ${fmt(it.length)}${salv?` <span class="faint">· ${salv} salvados</span>`:''}`; })()} <span class="faint">· ts ${esc(hace(c.ts))}</span></b></div>
       <div class="kv"><span>Series de mínimos (alertas)</span><b>${d?fmt(Object.keys(d.minimos||{}).length):'—'}</b></div>
       <div class="kv"><span>Alertas registradas</span><b>${d?fmt((d.alerts||[]).length):'—'}</b></div>
     </div>`;
@@ -329,11 +367,12 @@ function vConfig(){
     </div></div>`;
 }
 function vApp(){
-  const tabs=[['resumen','📋 Resumen'],['modulos','🧩 Módulos M01–M17'],['correos','✉️ Correos'],['workflows','⚙️ Workflows'],['datos','📊 Datos y cupones'],['config','🔐 Configuración']];
+  const tabs=[['resumen','📋 Resumen'],['modulos','🧩 Módulos M01–M17'],['reparaciones','🔧 Reparaciones'],['correos','✉️ Correos'],['workflows','⚙️ Workflows'],['datos','📊 Datos y cupones'],['config','🔐 Configuración']];
   const left=Math.max(0,Math.round((S.nextload-Date.now())/1000));
   let inner='';
   if(S.tab==='resumen') inner=vResumen();
   else if(S.tab==='modulos') inner=vModulos();
+  else if(S.tab==='reparaciones') inner=vReparaciones();
   else if(S.tab==='correos') inner=vCorreos();
   else if(S.tab==='workflows') inner=vWorkflows();
   else if(S.tab==='datos') inner=vDatos();
