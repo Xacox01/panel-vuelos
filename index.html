@@ -145,9 +145,28 @@ async function cargarRuns(k){
        S.runs[k]=(j.workflow_runs||[]).filter(r=>r.conclusion!=='skipped').slice(0,10); }
   catch(e){ S.runs[k]=null; }
 }
+/* Task 27: proxy estático de runs. La API anónima (60 req/h compartidas entre
+   todos los visitantes) dejaba la tabla "Workflows" como "No disponible".
+   El workflow refresh-runs del propio panel consulta las Actions de ambos
+   repos con GITHUB_TOKEN y publica runs.json cada 10 min; el panel lo lee
+   primero y solo cae a la API anónima si el proxy no está disponible. */
+async function cargarRunsAll(){
+  try{
+    const j=await jget(`./runs.json?t=${Date.now()}`);
+    if(j && j.sites){
+      for(const k of Object.keys(SITES)){
+        const rs=(j.sites[k]||[]);
+        S.runs[k]=rs.filter(r=>r.conclusion!=='skipped').slice(0,10);
+      }
+      S.runs_ts=String(j.ts||'');
+      if(Object.keys(SITES).every(k=>Array.isArray(S.runs[k]))) return;
+    }
+  }catch(e){}
+  await Promise.all(Object.keys(SITES).map(cargarRuns));
+}
 async function cargarTodo(){
   if(S.loading) return; S.loading=true; render();
-  await Promise.all([ ...Object.keys(SITES).map(cargarSitio), ...Object.keys(SITES).map(cargarRuns) ]);
+  await Promise.all([ ...Object.keys(SITES).map(cargarSitio), cargarRunsAll() ]);
   S.loading=false; S.nextload=Date.now()+REFRESH_MIN*60*1000; render();
 }
 
@@ -327,7 +346,8 @@ function vWorkflows(){
             <td><span class="chip ${cls}">${esc(c)}</span></td>
             <td class="mut">${stgo(String(r.created_at).replace('T',' ').slice(0,19))}</td></tr>`; }).join('')}
       </table></div>
-      <p class="faint" style="margin-top:8px">Cadencia: refresh */5 min (unificada) · auditoría 4×/día · auto-reparación on-failure.</p>
+      <p class="faint" style="margin-top:8px">Cadencia: refresh */5 min (unificada) · auditoría 4×/día · auto-reparación on-failure.
+      ${S.runs_ts?`Runs leídos del proxy del panel (última publicación ${esc(stgo(String(S.runs_ts).replace(' ','T')+'Z'))} · hace ${esc(hace(String(S.runs_ts).replace(' ','T')+'Z'))} · se publica cada 10 min).`:'Runs vía API pública de GitHub (puede agotar el límite anónimo; el proxy del panel los publica cada 10 min).')}</p>
     </div>`;
   }).join('');
   return `<div class="grid">${rows}</div>`;
