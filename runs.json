@@ -1,339 +1,339 @@
 {
- "ts": "2026-11-22 03:25:28",
+ "ts": "2026-11-22 11:51:07",
  "nota": "proxy autenticado del panel; campos = API workflow_runs",
  "sites": {
   "qwen": [
    {
-    "id": 44980422054,
+    "id": 45018403729,
     "name": "auto-reparacion",
-    "run_number": 1951,
+    "run_number": 1990,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:23:41Z",
-    "head_sha": "af0dbf20ee72452570826377a4750c3ae8d940bd",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44980422054"
+    "created_at": "2026-11-22T11:39:38Z",
+    "head_sha": "4c2894df5baa8168514cac1ef13758a57d70eb71",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45018403729"
    },
    {
-    "id": 44980409991,
+    "id": 45018397375,
     "name": "refresh",
-    "run_number": 6392,
+    "run_number": 6430,
     "event": "workflow_dispatch",
     "status": "in_progress",
     "conclusion": null,
-    "created_at": "2026-11-22T03:23:31Z",
-    "head_sha": "af0dbf20ee72452570826377a4750c3ae8d940bd",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44980409991"
+    "created_at": "2026-11-22T11:39:33Z",
+    "head_sha": "4c2894df5baa8168514cac1ef13758a57d70eb71",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45018397375"
    },
    {
-    "id": 44980256939,
+    "id": 45018242525,
     "name": "pages build and deployment",
-    "run_number": 6201,
+    "run_number": 6239,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:21:32Z",
-    "head_sha": "af0dbf20ee72452570826377a4750c3ae8d940bd",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44980256939"
+    "created_at": "2026-11-22T11:37:33Z",
+    "head_sha": "4c2894df5baa8168514cac1ef13758a57d70eb71",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45018242525"
    },
    {
-    "id": 44979114512,
+    "id": 45017467067,
     "name": "auto-reparacion",
-    "run_number": 1950,
+    "run_number": 1989,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:06:40Z",
-    "head_sha": "088dba8480c76da2131331be6cec8bf1d06f9660",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44979114512"
+    "created_at": "2026-11-22T11:28:11Z",
+    "head_sha": "11203dc6d4cb6fb8a514868d715d05838a4fc1ae",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45017467067"
    },
    {
-    "id": 44979100839,
+    "id": 45017459560,
     "name": "refresh",
-    "run_number": 6391,
+    "run_number": 6429,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:06:29Z",
-    "head_sha": "088dba8480c76da2131331be6cec8bf1d06f9660",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44979100839"
+    "created_at": "2026-11-22T11:28:05Z",
+    "head_sha": "11203dc6d4cb6fb8a514868d715d05838a4fc1ae",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45017459560"
    },
    {
-    "id": 44978936573,
+    "id": 45017301246,
     "name": "pages build and deployment",
-    "run_number": 6200,
+    "run_number": 6238,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:04:29Z",
-    "head_sha": "088dba8480c76da2131331be6cec8bf1d06f9660",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44978936573"
+    "created_at": "2026-11-22T11:26:05Z",
+    "head_sha": "11203dc6d4cb6fb8a514868d715d05838a4fc1ae",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45017301246"
    },
    {
-    "id": 44978230339,
+    "id": 45016522328,
     "name": "auto-reparacion",
-    "run_number": 1949,
+    "run_number": 1988,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T02:54:52Z",
-    "head_sha": "ea1dce852f37ede32793f7e124efc28a412e2a7c",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44978230339"
+    "created_at": "2026-11-22T11:16:46Z",
+    "head_sha": "4835aa71c954c56f206da21aa3195ec64f0a6e6d",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45016522328"
    },
    {
-    "id": 44978221268,
+    "id": 45016508122,
     "name": "refresh",
-    "run_number": 6390,
+    "run_number": 6428,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:54:44Z",
-    "head_sha": "ea1dce852f37ede32793f7e124efc28a412e2a7c",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44978221268"
+    "created_at": "2026-11-22T11:16:35Z",
+    "head_sha": "4835aa71c954c56f206da21aa3195ec64f0a6e6d",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45016508122"
    },
    {
-    "id": 44978082807,
+    "id": 45016342107,
     "name": "pages build and deployment",
-    "run_number": 6199,
+    "run_number": 6237,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:52:44Z",
-    "head_sha": "ea1dce852f37ede32793f7e124efc28a412e2a7c",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44978082807"
+    "created_at": "2026-11-22T11:14:35Z",
+    "head_sha": "4835aa71c954c56f206da21aa3195ec64f0a6e6d",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45016342107"
    },
    {
-    "id": 44977395017,
+    "id": 45015075779,
     "name": "auto-reparacion",
-    "run_number": 1948,
+    "run_number": 1987,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T02:43:26Z",
-    "head_sha": "980e754ec1a8df482925b8c9b6112043cb6fad05",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44977395017"
+    "created_at": "2026-11-22T10:59:34Z",
+    "head_sha": "e855b8905e66eed423938697165d202083059671",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45015075779"
    },
    {
-    "id": 44977386991,
+    "id": 45015062241,
     "name": "refresh",
-    "run_number": 6389,
+    "run_number": 6427,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:43:20Z",
-    "head_sha": "980e754ec1a8df482925b8c9b6112043cb6fad05",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44977386991"
+    "created_at": "2026-11-22T10:59:24Z",
+    "head_sha": "e855b8905e66eed423938697165d202083059671",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45015062241"
    },
    {
-    "id": 44977241369,
+    "id": 45014911774,
     "name": "pages build and deployment",
-    "run_number": 6198,
+    "run_number": 6236,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:41:20Z",
-    "head_sha": "980e754ec1a8df482925b8c9b6112043cb6fad05",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44977241369"
+    "created_at": "2026-11-22T10:57:24Z",
+    "head_sha": "e855b8905e66eed423938697165d202083059671",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45014911774"
    },
    {
-    "id": 44976123880,
+    "id": 45014181335,
     "name": "auto-reparacion",
-    "run_number": 1947,
+    "run_number": 1986,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T02:26:52Z",
-    "head_sha": "beb34f864ffa66576e33ad2d6a4d8cf6206d6a42",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44976123880"
+    "created_at": "2026-11-22T10:48:05Z",
+    "head_sha": "3da01a50b3622ba951a41655e879e5720a6dd1ad",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45014181335"
    },
    {
-    "id": 44976114344,
+    "id": 45014172672,
     "name": "refresh",
-    "run_number": 6388,
+    "run_number": 6426,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:26:44Z",
-    "head_sha": "beb34f864ffa66576e33ad2d6a4d8cf6206d6a42",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44976114344"
+    "created_at": "2026-11-22T10:47:58Z",
+    "head_sha": "3da01a50b3622ba951a41655e879e5720a6dd1ad",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45014172672"
    },
    {
-    "id": 44975960260,
+    "id": 45014013609,
     "name": "pages build and deployment",
-    "run_number": 6197,
+    "run_number": 6235,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:24:44Z",
-    "head_sha": "beb34f864ffa66576e33ad2d6a4d8cf6206d6a42",
-    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/44975960260"
+    "created_at": "2026-11-22T10:45:58Z",
+    "head_sha": "3da01a50b3622ba951a41655e879e5720a6dd1ad",
+    "html_url": "https://github.com/Xacox01/qwen_vuelos_rio/actions/runs/45014013609"
    }
   ],
   "rio": [
    {
-    "id": 44980542411,
+    "id": 45019047897,
     "name": "auto-reparacion",
-    "run_number": 3571,
+    "run_number": 3636,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:25:12Z",
-    "head_sha": "1cf49818a3becd39b6fcc7dbd04150a0ec9404f9",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44980542411"
+    "created_at": "2026-11-22T11:47:38Z",
+    "head_sha": "43a6a73450835d38d9cb881d0af0965ed7a38c0f",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45019047897"
    },
    {
-    "id": 44980528937,
+    "id": 45019034660,
     "name": "refresh",
-    "run_number": 9276,
+    "run_number": 9340,
     "event": "workflow_dispatch",
     "status": "in_progress",
     "conclusion": null,
-    "created_at": "2026-11-22T03:25:03Z",
-    "head_sha": "1cf49818a3becd39b6fcc7dbd04150a0ec9404f9",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44980528937"
+    "created_at": "2026-11-22T11:47:28Z",
+    "head_sha": "43a6a73450835d38d9cb881d0af0965ed7a38c0f",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45019034660"
    },
    {
-    "id": 44980270871,
+    "id": 45018764024,
     "name": "pages build and deployment",
-    "run_number": 9150,
+    "run_number": 9214,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:21:43Z",
-    "head_sha": "1cf49818a3becd39b6fcc7dbd04150a0ec9404f9",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44980270871"
+    "created_at": "2026-11-22T11:44:08Z",
+    "head_sha": "43a6a73450835d38d9cb881d0af0965ed7a38c0f",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018764024"
    },
    {
-    "id": 44980070238,
+    "id": 45018579326,
     "name": "auto-reparacion",
-    "run_number": 3570,
+    "run_number": 3635,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:19:07Z",
-    "head_sha": "dd3eb4bcc92c7a3b6773134e03e8698069194ac6",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44980070238"
+    "created_at": "2026-11-22T11:41:48Z",
+    "head_sha": "e74a689d0d67708487e3187d13cd3e41e48a476a",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018579326"
    },
    {
-    "id": 44980055442,
+    "id": 45018567144,
     "name": "refresh",
-    "run_number": 9275,
+    "run_number": 9339,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:18:55Z",
-    "head_sha": "dd3eb4bcc92c7a3b6773134e03e8698069194ac6",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44980055442"
+    "created_at": "2026-11-22T11:41:38Z",
+    "head_sha": "e74a689d0d67708487e3187d13cd3e41e48a476a",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018567144"
    },
    {
-    "id": 44979804090,
+    "id": 45018303064,
     "name": "pages build and deployment",
-    "run_number": 9149,
+    "run_number": 9213,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:15:36Z",
-    "head_sha": "dd3eb4bcc92c7a3b6773134e03e8698069194ac6",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44979804090"
+    "created_at": "2026-11-22T11:38:18Z",
+    "head_sha": "e74a689d0d67708487e3187d13cd3e41e48a476a",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018303064"
    },
    {
-    "id": 44979409112,
+    "id": 45018112333,
     "name": "auto-reparacion",
-    "run_number": 3569,
+    "run_number": 3634,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:10:29Z",
-    "head_sha": "1efc2f549b7047accd568930f483af032ef5d92a",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44979409112"
+    "created_at": "2026-11-22T11:35:54Z",
+    "head_sha": "c658762c54d276ed013c9f09abef53594ae7d8d3",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018112333"
    },
    {
-    "id": 44979399625,
+    "id": 45018099137,
     "name": "refresh",
-    "run_number": 9274,
+    "run_number": 9338,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:10:22Z",
-    "head_sha": "1efc2f549b7047accd568930f483af032ef5d92a",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44979399625"
+    "created_at": "2026-11-22T11:35:43Z",
+    "head_sha": "c658762c54d276ed013c9f09abef53594ae7d8d3",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45018099137"
    },
    {
-    "id": 44979142052,
+    "id": 45017822516,
     "name": "pages build and deployment",
-    "run_number": 9148,
+    "run_number": 9212,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:07:02Z",
-    "head_sha": "1efc2f549b7047accd568930f483af032ef5d92a",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44979142052"
+    "created_at": "2026-11-22T11:32:24Z",
+    "head_sha": "c658762c54d276ed013c9f09abef53594ae7d8d3",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45017822516"
    },
    {
-    "id": 44978663977,
+    "id": 45017597575,
     "name": "auto-reparacion",
-    "run_number": 3568,
+    "run_number": 3633,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T03:00:57Z",
-    "head_sha": "c32d82ed29a7bee7d639a4fb175f36589ed95ef5",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44978663977"
+    "created_at": "2026-11-22T11:29:50Z",
+    "head_sha": "0576f33469b4e66ae40a13b74228f99470352987",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45017597575"
    },
    {
-    "id": 44978649337,
+    "id": 45017590643,
     "name": "refresh",
-    "run_number": 9273,
+    "run_number": 9337,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T03:00:47Z",
-    "head_sha": "c32d82ed29a7bee7d639a4fb175f36589ed95ef5",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44978649337"
+    "created_at": "2026-11-22T11:29:45Z",
+    "head_sha": "0576f33469b4e66ae40a13b74228f99470352987",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45017590643"
    },
    {
-    "id": 44978411100,
+    "id": 45017328468,
     "name": "pages build and deployment",
-    "run_number": 9147,
+    "run_number": 9211,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:57:28Z",
-    "head_sha": "c32d82ed29a7bee7d639a4fb175f36589ed95ef5",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44978411100"
+    "created_at": "2026-11-22T11:26:25Z",
+    "head_sha": "0576f33469b4e66ae40a13b74228f99470352987",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45017328468"
    },
    {
-    "id": 44977909649,
+    "id": 45016745454,
     "name": "auto-reparacion",
-    "run_number": 3567,
+    "run_number": 3632,
     "event": "workflow_run",
     "status": "completed",
     "conclusion": "skipped",
-    "created_at": "2026-11-22T02:50:22Z",
-    "head_sha": "5c2c2002fe54bcb16d28e9ea8669360cabae7a7f",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44977909649"
+    "created_at": "2026-11-22T11:19:29Z",
+    "head_sha": "7b8809fbb9f3a8c0338a0a0b02a50927f8b9b112",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45016745454"
    },
    {
-    "id": 44977898509,
+    "id": 45016738051,
     "name": "refresh",
-    "run_number": 9272,
+    "run_number": 9336,
     "event": "workflow_dispatch",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:50:14Z",
-    "head_sha": "5c2c2002fe54bcb16d28e9ea8669360cabae7a7f",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44977898509"
+    "created_at": "2026-11-22T11:19:24Z",
+    "head_sha": "7b8809fbb9f3a8c0338a0a0b02a50927f8b9b112",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45016738051"
    },
    {
-    "id": 44977651469,
+    "id": 45016466814,
     "name": "pages build and deployment",
-    "run_number": 9146,
+    "run_number": 9210,
     "event": "dynamic",
     "status": "completed",
     "conclusion": "success",
-    "created_at": "2026-11-22T02:46:54Z",
-    "head_sha": "5c2c2002fe54bcb16d28e9ea8669360cabae7a7f",
-    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/44977651469"
+    "created_at": "2026-11-22T11:16:04Z",
+    "head_sha": "7b8809fbb9f3a8c0338a0a0b02a50927f8b9b112",
+    "html_url": "https://github.com/Xacox01/vuelos-rio-live/actions/runs/45016466814"
    }
   ]
  }
